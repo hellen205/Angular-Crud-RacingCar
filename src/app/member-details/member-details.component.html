@@ -1,0 +1,51 @@
+<div class="container-fluid col-md-6">
+    <h3 class="text-center lead">Add Member to Racing Team</h3>
+    <br />
+    <!--Template Driven Form or Model Driven Form?-->
+    <form #membersForm="ngForm" (ngSubmit)="onSubmit(membersForm)">
+      <div>
+        <div class="row">
+          <div class="col-md-6">
+            <input type="hidden" class="form-control"  id="id"  name="id" #id="ngModel" [(ngModel)]="memberList.id"  value=0/>
+            <input type="text" class="form-control"  id="firstName" placeholder="First Name" name="firstName" #firstName="ngModel" [(ngModel)]="memberList.firstName" required/>
+          </div>
+          <div class="col-md-6">
+            <input  type="text" class="form-control" id="lastName" placeholder="Last Name" name="lastName" #lastName="ngModel" [(ngModel)]="memberList.lastName" required />
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="jobTitle" name="jobTitle" placeholder="Job Title" #jobTitle="ngModel"  [(ngModel)]="memberList.jobTitle" required />
+          </div>
+          <!--We may have to make a service call to get this list-->
+          <select id="team" class="col-md-6 custom-select" name="team" #team="ngModel" [(ngModel)]="memberList.team" required>
+            <option *ngFor="let team of teams">
+              {{team.teamName}}
+            </option>
+          </select>
+        </div>
+        <br />
+        <div class="form-group col-md-6">
+          <div class="row">
+            <label id="activeStatus" class="md-check lead" name="status" >
+              <input type="radio" value="Active" name="status" #status="ngModel" [(ngModel)]="memberList.status" required/> Active
+            </label>
+            <label class="md-check lead">
+              <input type="radio" value="Inactive" name="status"  #status="ngModel" [(ngModel)]="memberList.status" required/> Inactive
+            </label>
+          </div>
+        </div>
+      </div>
+      <!--Disable if form is invalid-->
+     
+      <button type="submit" class="btn btn-primary pull-left" routerLink="/members">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary pull-right" [disabled]="!membersForm.valid" >
+        Save Member
+      </button>
+    </form>
+  </div>
+
+  {{membersForm.value | json}}
